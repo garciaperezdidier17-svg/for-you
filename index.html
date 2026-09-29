@@ -308,9 +308,7 @@
     <p class="sub">para mi persona favorita del mundo ✨</p>
     <div class="sub-flowers"><span>🌸</span><span>🌷</span><span>🌼</span><span>🌺</span></div>
 
-    <audio id="bgMusic" loop>
-      <source src="cancion.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop preload="auto" src="cancion.mp3"></audio>
     <button class="music-btn" id="musicToggle" type="button"><span class="note-ico">🎵</span> dame click <span class="note-ico">🎵</span></button>
     <p class="music-note">Sorpresa ♡</p>
 
@@ -428,9 +426,14 @@
   const bgMusic = document.getElementById('bgMusic');
   const confettiEmojis = ['🌸','🌷','🌼','💮','🌺','✨'];
 
-  musicToggle.addEventListener('click', () => {
-    bgMusic.play();
-    musicToggle.textContent = '🎵 sonando...';
+  musicToggle.addEventListener('click', async () => {
+    try {
+      await bgMusic.play();
+      musicToggle.textContent = '🎵 sonando...';
+    } catch (error) {
+      bgMusic.load();
+      musicToggle.textContent = '🎵 toca otra vez';
+    }
   });
 
   function blowCandle(){
